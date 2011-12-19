@@ -65,3 +65,5 @@ set statusline=%<%f\ (%{&ft})\ %-4(%m%)%{fugitive#statusline()}%=%-19(%3l,%02c%0
 
 let g:CommandTMaxHeight=10
 
+colorscheme solarized
+
