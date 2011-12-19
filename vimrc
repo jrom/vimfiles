@@ -14,11 +14,17 @@ set incsearch " incremental
 set ignorecase " case insensitive
 set smartcase " case sensitive if capital letters
 
+set hidden
+set history=1000
+set wildmenu " tab completion for menu
+
+set scrolloff=3 " Context when in the limit of a buffer
+set number
+
 set nowrap
 set tabstop=2                     " a tab is two spaces
 set shiftwidth=2                  " an autoindent (with <<) is two spaces
 set expandtab                     " use spaces, not tabs
-set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
 
 let mapleader=","
@@ -28,6 +34,9 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 
+map <leader>ga :CommandTFlush<cr>\|:CommandT app<cr>
+map <leader>gj :CommandTFlush<cr>\|:CommandT app/assets/javascripts<cr>
+map <leader>gs :CommandTFlush<cr>\|:CommandT app/assets/stylesheets<cr>
 map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
 map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
 map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
@@ -52,4 +61,7 @@ set list listchars=tab:\ \ ,trail:·
 
 set laststatus=2
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%{fugitive#statusline()}%=%-19(%3l,%02c%03V%) " From Gary Bernhardt
+
+
+let g:CommandTMaxHeight=10
 
