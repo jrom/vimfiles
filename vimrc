@@ -43,3 +43,13 @@ nnoremap <leader><leader> <c-^>
 
 set backupdir=~/.vim/_backup
 set directory=~/.vim/_temp
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+" Use the same symbols as TextMate for tabstops and EOLs
+set list listchars=tab:\ \ ,trail:·
+
+set laststatus=2
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%{fugitive#statusline()}%=%-19(%3l,%02c%03V%) " From Gary Bernhardt
+
