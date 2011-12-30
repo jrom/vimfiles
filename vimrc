@@ -80,7 +80,7 @@ function! RunSpec(args)
   else
     let spec = 'rspec'
   end
-  let cmd = ':! ' . spec . ' %' . a:args
+  let cmd = ':! time ' . spec . ' %' . a:args
   execute cmd
 endfunction
 
