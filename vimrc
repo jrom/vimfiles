@@ -81,7 +81,7 @@ function! RunSpec(args)
   else
     let spec = 'rspec'
   end
-  let cmd = ':! time ' . spec . ' %' . a:args
+  let cmd = ':! gtime -f "\%e \%U \%S \%P" ' . spec . ' %' . a:args
   execute cmd
 endfunction
 
