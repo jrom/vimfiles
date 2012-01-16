@@ -88,3 +88,4 @@ endfunction
 map <leader>t :call RunSpec(':' . <C-r>=line('.')<CR>)<CR>
 map <leader>T :call RunSpec('')<CR>
 
+set timeoutlen=100 " This avoids escape lag
