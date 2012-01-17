@@ -89,3 +89,6 @@ map <leader>t :call RunSpec(':' . <C-r>=line('.')<CR>)<CR>
 map <leader>T :call RunSpec('')<CR>
 
 set timeoutlen=500 " This avoids escape lag
+
+let g:Powerline_symbols = 'fancy' " Uses fancy font for powerline
+
