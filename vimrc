@@ -92,3 +92,5 @@ set timeoutlen=500 " This avoids escape lag
 
 let g:Powerline_symbols = 'fancy' " Uses fancy font for powerline
 
+:nnoremap <silent> <leader>tr :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
