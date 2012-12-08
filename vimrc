@@ -71,26 +71,105 @@ colorscheme solarized
 
 " Running tests from Gary Bernhardt & Francesc Esplugas & Jordi Romero
 
-function! RunSpec(args)
-  write
-  silent
+
+function! s:send_test(executable)
+  let s:executable = a:executable
+  if s:executable == ''
+    if exists("g:tmux_last_command") && g:tmux_last_command != ''
+      let s:executable = g:tmux_last_command
+    else
+      let s:executable = 'echo "Warning: No command has been run yet"'
+    endif
+  endif
+  call Send_to_Tmux("".s:executable."\n")
+  :redraw!
+endfunction
+
+function! RunTests(args)
+  :write
+  :silent !echo;echo;echo;echo;echo
   if filereadable('script/test')
     let spec =  'script/test '
   elseif filereadable('Gemfile')
-    let spec = 'bundle exec rspec'
+    let spec = 'bundle exec rspec '
   else
-    let spec = 'rspec'
+    let spec = 'rspec '
   end
-  let cmd = ':! gtime -f "\%e \%U \%S \%P" ' . spec . ' %' . a:args
+  " Without Send_to_Tmux
+  let cmd = ':! time ' . spec . a:args
   execute cmd
+
+  " With Send_to_Tmux
+  " let cmd = 'time ' . spec . a:args
+  " return s:send_test(cmd)
 endfunction
 
-map <leader>t :call RunSpec(':' . <C-r>=line('.')<CR>)<CR>
-map <leader>T :call RunSpec('')<CR>
+" function! RunTests(filename)
+"     " Write the file and run tests for the given filename
+"     :w
+"     :silent !echo;echo;echo;echo;echo
+"     exec ":!bundle exec rspec " . a:filename
+" endfunction
+
+function! SetTestFile()
+    " Set the spec file that tests will be run for.
+    let t:grb_test_file=@%
+endfunction
+
+function! RunTestFile(...)
+    if a:0
+        let command_suffix = a:1
+    else
+        let command_suffix = ""
+    endif
+
+    " Run the tests for the previously-marked file.
+    let in_spec_file = match(expand("%"), '_spec.rb$') != -1
+    if in_spec_file
+        call SetTestFile()
+    elseif !exists("t:grb_test_file")
+        return
+    end
+    call RunTests(t:grb_test_file . command_suffix)
+endfunction
+
+function! RunNearestTest()
+    let spec_line_number = line('.')
+    call RunTestFile(":" . spec_line_number)
+endfunction
+
+" Run this file
+map <leader>T :call RunTestFile()<cr>
+" Run only the example under the cursor
+map <leader>t :call RunNearestTest()<cr>
+" Run all test files
+map <leader>a :call RunTests('spec')<cr>
+
+" Toggle Scratch pad
+function! ToggleScratch()
+  if expand('%') == g:ScratchBufferName
+      quit
+  else
+      Sscratch
+  endif
+endfunction
+
+map <leader>s :call ToggleScratch()<CR>
+
 
 set timeoutlen=500 " This avoids escape lag
 
 let g:Powerline_symbols = 'fancy' " Uses fancy font for powerline
+
+
+" Bubble single lines
+nmap <C-Up> [e
+nmap <C-Down> ]e
+" Bubble multiple lines
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
+nmap gV `[v`]
 
 :nnoremap <silent> <leader>tr :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
