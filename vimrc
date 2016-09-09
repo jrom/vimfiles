@@ -65,8 +65,8 @@ set list listchars=tab:\ \ ,trail:·
 set laststatus=2
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%{fugitive#statusline()}%=%-19(%3l,%02c%03V%) " From Gary Bernhardt
 
-
 let g:CommandTMaxHeight=10
+set wildignore=.o,.obj,.git,node_modules/**
 
 colorscheme solarized
 
@@ -173,4 +173,20 @@ vmap <C-Down> ]egv
 nmap gV `[v`]
 
 :nnoremap <silent> <leader>tr :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+nnoremap <silent> <leader>c :nohl<CR>
+
+execute pathogen#infect()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"--------------- Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_loc_list_height=4
+let g:syntastic_aggregate_errors = 1
 
