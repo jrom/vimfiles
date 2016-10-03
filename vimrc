@@ -176,7 +176,8 @@ nmap gV `[v`]
 
 nnoremap <silent> <leader>c :nohl<CR>
 
-execute pathogen#infect()
+set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
